@@ -1,58 +1,59 @@
-import React, { Component } from 'react';
-import Button from 'react-bootstrap/Button';
-import Sound from 'react-sound';
-import { DrumSound } from './DrumSound';
+import React from 'react';
+// import Sound from 'react-sound';
+import DrumSound from './DrumSound';
+import boom from '../audio/boom.wav';
+import clap from '../audio/clap.wav';
+import hihat from '../audio/hihat.wav';
+import kick from '../audio/kick.wav';
+import openhat from '../audio/openhat.wav';
+import ride from '../audio/ride.wav';
+import snare from '../audio/snare.wav';
+import tink from '../audio/tink.wav';
+import tom from '../audio/tom.wav';
 //import boom from '../audio/boom.wav';
 //import Col from 'react-bootstrap/Col';
 //import	{TestComponent} from './TestComponent';
 
-export class DrumPad extends Component {
-	constructor (props) {
-		super(props);
-		this.state = {
-			playStatus: Sound.status.STOPPED
-		}
-	
-	this.handleClick = this.handleClick.bind(this); 
-	
-    this.handleKeyDown = this.handleKeyDown.bind(this); 
-}
+const data = [ 
+  {keyId: 'q', soundName: 'boom', url: boom  },
+  {keyId: 'w', soundName: 'clap', url: clap  },
+  {keyId: 'e', soundName: 'hihat', url: hihat },
+  {keyId: 'a', soundName: 'kick', url: kick },
+  {keyId: 's', soundName: 'openhat', url: openhat},
+  {keyId: 'd', soundName: 'ride', url: ride },
+  {keyId: 'z', soundName: 'snare', url: snare },
+  {keyId: 'x', soundName: 'tink', url: tink },
+  {keyId: 'c', soundName: 'tom', url: tom  }
+  ]
 
-	componentDidMount() {
-    	document.addEventListener('keydown', this.handleKeyDown, false);
-    }
+const DrumPad = () => {
 
-    componentWillUnmount() {
-    	document.removeEventListener('keydown', this.handleKeyDown);
-    }
+// 	componentDidMount() {
+//     	document.addEventListener('keydown', this.handleKeyDown, false);
+//     }
+
+//     componentWillUnmount() {
+//     	document.removeEventListener('keydown', this.handleKeyDown);
+//     }
 
 
-handleKeyDown(event) {
-    if(event.key === this.props.id) {
-    	this.setState({
-       		playStatus: Sound.status.PLAYING
-    	})
-    }
-};
+// handleKeyDown(event) {
+//     if(event.key === this.props.id) {
+//     	this.setState({
+//        		playStatus: Sound.status.PLAYING
+//     	})
+//     }
+// };
 
-handleClick = () => {
 
-	this.setState({
-		playStatus: Sound.status.PLAYING
-	})
-}
-
-	render() {
-		console.log('drumpad component, showsound prop ' + this.props.showSound)
+const buttonData = data.map( ({keyId, url}) => {
+	return <DrumSound id={keyId} url={url} key={keyId}/>
+})
 		return (
-			<div className='pad'>
-				<Button
-				 onClick={this.handleClick} size="lg" block>{this.props.id}</Button>
-				<DrumSound showSound={this.props.showSound} playStatus={this.state.playStatus} id={this.props.id }/>
+			<div>
+				{buttonData}
 			</div>
 		);
 	}
-}
 
-
-//setstate matching the ID of the event target
+export default DrumPad;
