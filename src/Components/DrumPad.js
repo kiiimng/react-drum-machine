@@ -1,5 +1,4 @@
 import React from 'react';
-// import Sound from 'react-sound';
 import DrumSound from './DrumSound';
 import boom from '../audio/boom.wav';
 import clap from '../audio/clap.wav';
@@ -10,9 +9,6 @@ import ride from '../audio/ride.wav';
 import snare from '../audio/snare.wav';
 import tink from '../audio/tink.wav';
 import tom from '../audio/tom.wav';
-//import boom from '../audio/boom.wav';
-//import Col from 'react-bootstrap/Col';
-//import	{TestComponent} from './TestComponent';
 
 const data = [ 
   {keyId: 'q', soundName: 'boom', url: boom  },

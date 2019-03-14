@@ -8,6 +8,24 @@ class DrumSound extends React.Component {
 		playStatus: Sound.status.STOPPED
 		}
 	
+		handleKeyDown = (event) => {
+			if (event.key === this.props.id) {
+				this.setState({
+					playStatus: Sound.status.PLAYING
+				})
+			}
+		}
+
+	componentDidMount() {
+    	document.addEventListener('keydown', this.handleKeyDown, false);
+    }
+
+    componentWillUnmount() {
+    	document.removeEventListener('keydown', this.handleKeyDown);
+    }
+
+
+
 	
 	render(props) {
 	  return (
