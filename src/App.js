@@ -10,6 +10,7 @@ import ride from './audio/ride.wav';
 import snare from './audio/snare.wav';
 import tink from './audio/tink.wav';
 import tom from './audio/tom.wav';
+import Sound from 'react-sound';
 
 const drumData = [ 
     {keyId: 'q', soundName: 'boom', url: boom  },
@@ -24,30 +25,40 @@ const drumData = [
     ]
 
 class App extends React.Component {
-  constructor(props) {
-    super(props);
 
-      this.state = {
-        soundName: ''
-      }
-  }
+      state = {
+        selectedSound: boom,
+        playStatus: Sound.status.STOPPED, 
+      };
+
   
-  onSoundPlaying = (soundName) => {
+  onSoundSelect = (sound) => {
+    console.log(sound)
     this.setState ({
-      soundName: soundName
-    })
-  }
+      selectedSound: sound,
+      playStatus: Sound.status.PLAYING
+    });
+  };
 
 
   render() {
     return (
       <div className="ui container">
         <div>
-          <DrumPad  drumData={drumData} onSoundPlaying={this.onSoundPlaying} />
+          <DrumPad  drumData={drumData} onSoundSelect={this.onSoundSelect} />
         </div>
+        <Sound
+		      url={this.state.selectedSound.url}
+		      playStatus={this.state.playStatus}
+		      //playFromPosition={300 /* in milliseconds */}
+		      onLoading={this.handleSongLoading}
+		      onPlaying={this.handleSongPlaying}
+					onFinishedPlaying={this.handleSongFinishedPlaying}
+					autoLoad={true}
+		    />
         <div className="ui header">
-          <Display soundName={this.state.soundName} />
-        </div>
+          <Display soundName={this.state.selectedSound.soundName} />
+          </div>
       </div>
       );
   }

@@ -1,60 +1,55 @@
 import React from 'react';
-import Sound from 'react-sound';
 
 
-class DrumSound extends React.Component {
-	constructor(props) {
-		super(props)
-		
-		this.state = {
-			playStatus: Sound.status.STOPPED
-		}
-	}
+
+const DrumSound = ({onSoundSelect, drumSound}) => {
 	
-		handleKeyDown = (event) => {
-			if (event.key === this.props.id) {
-				this.setState({
-					playStatus: Sound.status.PLAYING
-				})
-			}
-		}
-
-		handleClick = () => {
-			this.setState ({
-				playStatus: Sound.status.PLAYING
-			});
-			
-			this.props.onSoundPlaying(this.props.soundName)
-
-
-
-		}
-
-	componentDidMount() {
-    	document.addEventListener('keydown', this.handleKeyDown, false)
-    }
-
-	render(props) {
 	  return (
 			<div className="column">
 				<div className="ui button" 
-					onClick={this.handleClick}
-				>
-			  {this.props.id}
-		    <Sound
-		      url={this.props.url}
-		      playStatus={this.state.playStatus}
-		      //playFromPosition={300 /* in milliseconds */}
-		      onLoading={this.handleSongLoading}
-		      onPlaying={this.handleSongPlaying}
-					onFinishedPlaying={this.handleSongFinishedPlaying}
-					autoLoad={true}
-		    />
-	    </div>
+					onClick={() => {onSoundSelect(drumSound)}}>
+			  		{drumSound.keyId}
+	    		</div>
 			</div>
-			
 	  )
 	}
-}
 
 export default DrumSound;
+
+		// handleKeyDown = (event) => {
+		// 	if (event.key === this.props.id) {
+		// 		this.setState({
+		// 			playStatus: Sound.status.PLAYING
+		// 		})
+		// 		// this.props.onSoundPlaying(this.props.soundName)
+		// 	}
+		// }
+
+		// handleClick = (event) => {
+
+		// 	if (event.target.innerHTML === this.props.id) {
+		// 		this.setState ({
+		// 			playStatus: Sound.status.PLAYING,
+		// 			soundName: this.props.soundName
+		// 		});
+			
+		// 		this.props.onSoundPlaying(this.state.soundName)
+		// 	}
+		// }
+
+
+
+	// componentDidMount() {
+	// 		document.addEventListener('keydown', this.handleKeyDown, false);
+			
+	// }
+
+	// componentDidUpdate (prevProps, prevState) {
+	// 	console.log(prevState)
+	// 	if(prevState === Sound.status.PLAYING) {
+	// 		this.setState ({
+	// 		playStatus: Sound.status.STOPPED
+	// 		})
+	// 	}
+		
+	// }

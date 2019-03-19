@@ -2,15 +2,14 @@ import React from 'react';
 import DrumSound from './DrumSound';
 
 
-const DrumPad = ( {drumData, onSoundPlaying} ) =>  {
+const DrumPad = ( {drumData, onSoundSelect} ) =>  {
 
-const buttonItems = drumData.map( (data) => {
+const buttonItems = drumData.map( (drumSound) => {
     return <DrumSound
-    id={data.keyId} 
-    url={data.url} 
-    key={data.keyId} 
-    soundName={data.soundName}
-    onSoundPlaying={onSoundPlaying} />
+    drumSound={drumSound} 
+    key={drumSound.keyId} 
+    onSoundSelect={onSoundSelect}
+     />
     });
 
     return <div className="ui center aligned three column grid">{buttonItems}</div>
