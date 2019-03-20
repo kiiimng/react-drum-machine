@@ -2,17 +2,31 @@ import React from 'react';
 
 
 
-const DrumSound = ({onSoundSelect, drumSound}) => {
-	
-	  return (
-			<div className="column">
-				<div className="ui button" 
-					onClick={() => {onSoundSelect(drumSound)}}>
-			  		{drumSound.keyId}
-	    		</div>
+class DrumSound extends React.Component {
+
+	componentDidMount(props){
+		document.addEventListener('keydown', this.onKeyDown, false);
+	  }
+
+	  onKeyDown = (event) => {
+		if (event.key === this.props.drumSound.keyId) {
+			this.props.onKeyDown(this.props.drumSound)
+		}
+	  }
+
+render(props) {
+	return (
+		<div className="column">
+			<div className="ui button" 
+				onClick={() => {this.props.onSoundSelect(this.props.drumSound)}
+				}>
+				  {this.props.drumSound.keyId}
 			</div>
-	  )
-	}
+		</div>
+  )
+
+}
+}
 
 export default DrumSound;
 

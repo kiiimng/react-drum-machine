@@ -10,7 +10,7 @@ import ride from './audio/ride.wav';
 import snare from './audio/snare.wav';
 import tink from './audio/tink.wav';
 import tom from './audio/tom.wav';
-import Sound from 'react-sound';
+import PowerButton from './Components/PowerButton';
 
 const drumData = [ 
     {keyId: 'q', soundName: 'boom', url: boom  },
@@ -27,41 +27,68 @@ const drumData = [
 class App extends React.Component {
 
       state = {
-        selectedSound: boom,
-        playStatus: Sound.status.STOPPED, 
+        selectedSound: '',
+        power: "true"
       };
 
   
   onSoundSelect = (sound) => {
-    console.log(sound)
     this.setState ({
       selectedSound: sound,
-      playStatus: Sound.status.PLAYING
     });
+    if(sound === this.state.selectedSound) {
+      document.getElementById('player').currentTime = 0
+      document.getElementById('player').play()
+    }  
   };
 
+  handleKeyDown = (sound) => {
+    this.setState ({
+      selectedSound: sound,
+    });
+    if(sound === this.state.selectedSound) {
+      document.getElementById('player').currentTime = 0
+      document.getElementById('player').play()
+    }  
+    }
+
+    switchPower = () => {
+      console.log(this.state.power)
+      this.setState({ 
+        power: this.state.power === 'true' ? 'false' : 'true'
+      })
+    }
+
+ 
+    
+    shouldComponentUpdate(){
+      return this.state.power
+    }
 
   render() {
     return (
       <div className="ui container">
         <div>
-          <DrumPad  drumData={drumData} onSoundSelect={this.onSoundSelect} />
+          <DrumPad  drumData={drumData} onSoundSelect={this.onSoundSelect} onKeyDown={this.handleKeyDown}/>
         </div>
-        <Sound
-		      url={this.state.selectedSound.url}
-		      playStatus={this.state.playStatus}
-		      //playFromPosition={300 /* in milliseconds */}
-		      onLoading={this.handleSongLoading}
-		      onPlaying={this.handleSongPlaying}
-					onFinishedPlaying={this.handleSongFinishedPlaying}
-					autoLoad={true}
-		    />
+        <audio id="player" src={this.state.selectedSound.url} autoPlay={true}></audio>
+
         <div className="ui header">
           <Display soundName={this.state.selectedSound.soundName} />
-          </div>
+        </div>
+        <PowerButton power={this.state.power} onClick={this.switchPower}/>
       </div>
       );
   }
 }
 
 export default App;
+
+// Sound
+// url={this.state.selectedSound.url}
+// playStatus={this.state.playStatus}
+// //playFromPosition={300 /* in milliseconds */}
+// onLoading={this.handleSongLoading}
+// onPlaying={this.handleSongPlaying}
+// onFinishedPlaying={this.handleSongFinishedPlaying}
+// autoLoad={true}
