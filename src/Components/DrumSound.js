@@ -16,8 +16,8 @@ class DrumSound extends React.Component {
 
 render(props) {
 	return (
-		<div className="column">
-			<div className="ui button" 
+		<div className="column drum">
+			<div className="ui basic button inverted" 
 				onClick={() => {this.props.onSoundSelect(this.props.drumSound)}
 				}>
 				  {this.props.drumSound.keyId}

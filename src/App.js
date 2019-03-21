@@ -10,7 +10,7 @@ import ride from './audio/ride.wav';
 import snare from './audio/snare.wav';
 import tink from './audio/tink.wav';
 import tom from './audio/tom.wav';
-import PowerButton from './Components/PowerButton';
+import './App.css';
 
 const drumData = [ 
     {keyId: 'q', soundName: 'boom', url: boom  },
@@ -33,7 +33,7 @@ class App extends React.Component {
 
   
   onSoundSelect = (sound) => {
-   if (this.state.power){
+   if (this.state.power === "ON"){
     this.setState ({
       selectedSound: sound,
     });
@@ -46,7 +46,7 @@ class App extends React.Component {
   };
 
   handleKeyDown = (sound) => {
-    if (this.state.power) {
+    if (this.state.power === "ON") {
       this.setState ({
         selectedSound: sound,
       });
@@ -81,29 +81,22 @@ class App extends React.Component {
 
   render() {
     return (
-      <div className="ui container">
+      <div id="outer">
+        <div className="ui container">
         <div>
           <DrumPad  drumData={drumData} onSoundSelect={this.onSoundSelect} onKeyDown={this.handleKeyDown}/>
         </div>
         <audio id="player" src={this.state.selectedSound.url} autoPlay={true}></audio>
 
-        <div className="ui header">
+        <div className="ui header display">
           <Display soundName={this.state.selectedSound.soundName} />
         </div>
-        <button id="power-button" onClick={this.handleClick}>ON</button>
+        <button className=" ui primary basic button inverted" id="power-button" onClick={this.handleClick}>ON</button>
       </div>
+      </div>
+      
       );
   }
 }
 
 export default App;
-
-// Sound
-// url={this.state.selectedSound.url}
-// playStatus={this.state.playStatus}
-// //playFromPosition={300 /* in milliseconds */}
-// onLoading={this.handleSongLoading}
-// onPlaying={this.handleSongPlaying}
-// onFinishedPlaying={this.handleSongFinishedPlaying}
-// autoLoad={true}
-//this.setState({power: this.state.power === 'true' ? 'false' : 'true'}
