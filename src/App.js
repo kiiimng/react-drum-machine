@@ -28,11 +28,12 @@ class App extends React.Component {
 
       state = {
         selectedSound: '',
-        power: "true"
+        power: "ON"
       };
 
   
   onSoundSelect = (sound) => {
+   if (this.state.power){
     this.setState ({
       selectedSound: sound,
     });
@@ -40,29 +41,42 @@ class App extends React.Component {
       document.getElementById('player').currentTime = 0
       document.getElementById('player').play()
     }  
+   }
+
   };
 
   handleKeyDown = (sound) => {
-    this.setState ({
-      selectedSound: sound,
-    });
-    if(sound === this.state.selectedSound) {
-      document.getElementById('player').currentTime = 0
-      document.getElementById('player').play()
-    }  
+    if (this.state.power) {
+      this.setState ({
+        selectedSound: sound,
+      });
+      if(sound === this.state.selectedSound) {
+        document.getElementById('player').currentTime = 0
+        document.getElementById('player').play()
+      }  
     }
+  }
 
-    switchPower = () => {
-      console.log(this.state.power)
-      this.setState({ 
-        power: this.state.power === 'true' ? 'false' : 'true'
-      })
+    handleClick = () => {
+     const text = document.getElementById('power-button');
+     if (text.innerHTML === "ON") {
+       text.innerHTML = "OFF"
+     } else { 
+       text.innerHTML = "ON"
+     }
+
+      this.setState({
+        power: this.state.power === "ON" ? "OFF" : "ON",
+        selectedSound: ''})
+      
+      
+      
+
     }
-
- 
+    
     
     shouldComponentUpdate(){
-      return this.state.power
+      return this.state.power === "ON" ? true : false
     }
 
   render() {
@@ -76,7 +90,7 @@ class App extends React.Component {
         <div className="ui header">
           <Display soundName={this.state.selectedSound.soundName} />
         </div>
-        <PowerButton power={this.state.power} onClick={this.switchPower}/>
+        <button id="power-button" onClick={this.handleClick}>ON</button>
       </div>
       );
   }
@@ -92,3 +106,4 @@ export default App;
 // onPlaying={this.handleSongPlaying}
 // onFinishedPlaying={this.handleSongFinishedPlaying}
 // autoLoad={true}
+//this.setState({power: this.state.power === 'true' ? 'false' : 'true'}

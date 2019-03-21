@@ -1,5 +1,5 @@
 import React from 'react';
-import './PowerButton.css';
+//import './PowerButton.css';
 
 class PowerButton extends React.Component {
 state = {
@@ -10,14 +10,12 @@ handleSwitch = () => {
 }
 render() {
     return (
-        <button>
+        
         <label >
-            {this.props.power}
-            <input onChange={this.handleSwitch} className="input1" type="checkbox" /><span className="button1"></span>
+            <input  className="input1" type="checkbox" /><span className="button1"></span>
         
         </label>
 
-        </button>
 
     )
 }
